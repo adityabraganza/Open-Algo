@@ -1,0 +1,2 @@
+# NSE Stock Algorithm
+ 
