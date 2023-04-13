@@ -13,7 +13,6 @@ nifty50list = [
 "BPCL",
 "BHARTIARTL",
 "BOSCHLTD",
-"CAIRN",
 "CIPLA",
 "COALINDIA",
 "DRREDDY",
@@ -54,11 +53,24 @@ nifty50list = [
 "ZEEL"
 ]
 
+symbolReco = {}
+
 valueDictionaryBollinger = {}
+strongBuysBollinger = ()
 
 for string in nifty50list:
     try:
-        valueDictionaryBollinger.update({string:findBollingerBandValues(string + ".NS", 30)})
+        tempBollingerData = findBollingerBandValues(string + ".NS")
+        valueDictionaryBollinger.update({string:tempBollingerData})
+
+        symbolReco.update({string: tempBollingerData[0]})
+        if tempBollingerData[0] == "Strong Buy": strongBuysBollinger.append(string)
     except: print(string + " has returned no data")
 
 Rprint(valueDictionaryBollinger)
+
+Rprint(symbolReco)
+
+print("")
+print("Bollinger Band Analysis based strong buys")
+Rprint(strongBuysBollinger)

@@ -1,13 +1,12 @@
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import yfinance as yf
-from SimpleMathModule import *
+import SimpleMathModule as SMM
 
-def findBollingerBandValues(symbol, HistoricalDataLength):
-
+def StockCLoseData(symbol: str, endDate, length: int) -> list:
     dataWantedSymbol = yf.download(
         symbol,
-        start=(datetime.today() - timedelta(days=HistoricalDataLength)).date(),
-        end=date.today()
+        start=(endDate - timedelta(days=length)).date(),
+        end=(endDate).date()
         )
     dataWantedSymbol = dataWantedSymbol.to_dict()
 
@@ -16,20 +15,27 @@ def findBollingerBandValues(symbol, HistoricalDataLength):
     x = 0
     for __str__ in Dates:
         ClosePriceValues.append(dataWantedSymbol["Close"][__str__])
+    return ClosePriceValues
+
+def findBollingerBandValues(symbol: str) -> dict:
+
+    endDate = datetime.today()
+    ClosePriceValues = StockCLoseData(symbol, endDate, 60)
 
     x = 0
     bollingerBandStandardDeviationList = []
     while x < 20:
         bollingerBandStandardDeviationList.append(ClosePriceValues[len(ClosePriceValues)-1-x])
         x += 1
+
     totalValbollinger = 0
     for ele in range(0, len(bollingerBandStandardDeviationList)):
         totalValbollinger = totalValbollinger + bollingerBandStandardDeviationList[ele]
     MovingAverage20 = totalValbollinger/len(bollingerBandStandardDeviationList)
 
     currPrice = bollingerBandStandardDeviationList[0]
-    UpperBand = MovingAverage20+(2*(StandardDeviation(bollingerBandStandardDeviationList)))
-    LowerBand = MovingAverage20-(2*(StandardDeviation(bollingerBandStandardDeviationList)))
+    UpperBand = MovingAverage20+(2*(SMM.StandardDeviation(bollingerBandStandardDeviationList)))
+    LowerBand = MovingAverage20-(2*(SMM.StandardDeviation(bollingerBandStandardDeviationList)))
 
     Recomendation = "Error"
 
@@ -45,12 +51,52 @@ def findBollingerBandValues(symbol, HistoricalDataLength):
         Recomendation = "Weak Sell"
 
     valList = [
+        "Bollinger Band Analysis: " + str(Recomendation),
         "Current Price: " + str(currPrice),
         "Upper Band: " + str(UpperBand),
         "Moving Average: " + str(MovingAverage20),
-        "Lower Band: " + str(LowerBand),
-        "Analysis: " + str(Recomendation)]
+        "Lower Band: " + str(LowerBand)]
     return valList
 
 def RelativeStrengthIndex(symbol):
-    return
+    endDate = datetime.today()
+    ClosePriceValues = StockCLoseData(symbol, endDate, 30)
+    x = 0
+    pastClose15days = []
+    while x < 15:
+        pastClose15days.append(ClosePriceValues[len(ClosePriceValues)-1-x])
+        x += 1
+
+    postitivegrowth = []
+    negativegrowth = []
+
+    for ele in range(0, len(pastClose15days)):
+        if ele != 0:
+            tempval = pastClose15days[ele] - pastClose15days[ele - 1]
+            if tempval > 0:
+                postitivegrowth.append(tempval)
+            if tempval < 0:
+                negativegrowth.append(tempval)
+
+    positivegrowthaverage = (abs(SMM.Sum(postitivegrowth)))/len(postitivegrowth)
+    negativegrowthaverage = (abs(SMM.Sum(negativegrowth)))/len(negativegrowth)
+    RS = positivegrowthaverage/negativegrowthaverage
+    RSI = 100-(100/(1 + RS))
+
+    Recomendation = "Error"
+
+    if RSI >= 70:
+        Recomendation = "Strong Sell"
+    elif RSI <= 30:
+        Recomendation = "Strong Buy"
+    elif RSI > 50:
+        Recomendation = "Uptrend"
+    elif RSI < 50:
+        Recomendation = "Downtrend"
+    else:
+        Recomendation = "Neutral"
+
+    valList = [
+        "RSI Analysis: " + str(Recomendation),
+        "RSI Value: " + str(RSI)]
+    return valList

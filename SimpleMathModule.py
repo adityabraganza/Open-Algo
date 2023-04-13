@@ -162,3 +162,24 @@ def QuadraticEquation(a: int or float, b: int or float, c: int or float) -> int 
                 __val__ = int(__val__)
 
     return __val__
+
+def Sum(list: list) -> int or float:
+    """
+    Adds every number in a list
+
+    Args:
+        list (list): List of integers or floats
+
+    Returns:
+        int or float: Sum of the numbers
+    """
+    __total__ = 0
+
+    for val in list:
+        __total__ += val
+
+    if type(__total__) == float:
+        if __total__.is_integer():
+            __total__ = int(__total__)
+
+    return __total__
