@@ -1,4 +1,5 @@
 from functions import *
+from pprint import pprint as Rprint
 import tkinter as tk
 
 def analysis():

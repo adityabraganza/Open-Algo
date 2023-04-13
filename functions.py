@@ -6,13 +6,13 @@ def StockCLoseData(symbol: str, endDate, length: int) -> list:
     dataWantedSymbol = yf.download(
         symbol,
         start=(endDate - timedelta(days=length)).date(),
-        end=(endDate).date()
+        end=(endDate).date(),
+        progress = False
         )
     dataWantedSymbol = dataWantedSymbol.to_dict()
 
     ClosePriceValues = list()
     Dates = list(dataWantedSymbol["Close"])
-    x = 0
     for __str__ in Dates:
         ClosePriceValues.append(dataWantedSymbol["Close"][__str__])
     return ClosePriceValues
