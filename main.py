@@ -1,5 +1,4 @@
 from functions import *
-from pprint import pprint as Rprint
 import tkinter as tk
 
 def analysis():
@@ -22,6 +21,8 @@ def analysis():
     tk.Label(analysedGUI, text="Relative Strength Index Analysis:").grid(column=0, row=7) #Relative Strength Index
     tk.Label(analysedGUI, text=(RSIData[0])).grid(column=0, row=8) #Recomendation
     tk.Label(analysedGUI, text=(RSIData[1])).grid(column=0, row=9) #RSI Value
+
+    analysedGUI.mainloop()
 
 root = tk.Tk()
 
