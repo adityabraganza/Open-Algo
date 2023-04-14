@@ -10,6 +10,8 @@ def analysis():
     data = StockCLoseData(symbol, endDate, 60)
 
     analysedGUI = tk.Tk()
+    analysedGUI.iconphoto(False, tk.PhotoImage(file= "logo.gif", master=analysedGUI))
+    analysedGUI.title("Analysis for " + symbolInputBox.get().upper())
 
     tk.Label(analysedGUI, text="Analysis for " + symbolInputBox.get().upper()).pack() #Display stock symbol
 
@@ -35,11 +37,14 @@ def analysis():
     analysedGUI.mainloop()
 
 root = tk.Tk()
+root.iconphoto(False, tk.PhotoImage(file= "logo.gif"))
+root.title("Main GUI")
+root.minsize(250, 0)
 
-symbolInputBox = tk.Entry(root)
+symbolInputBox = tk.Entry(root, width= 35)
 symbolInputBox.pack()
 
-symbolInputButton = tk.Button(root, text="Analyse", command=analysis)
+symbolInputButton = tk.Button(root, text="Analyse", width= 35, command= analysis)
 symbolInputButton.pack()
 
 root.mainloop()
