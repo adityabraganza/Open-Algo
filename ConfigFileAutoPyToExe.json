@@ -84,6 +84,10 @@
   {
    "optionDest": "collect_all",
    "value": "yfinance"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/adity/Desktop/Code/Github/NSE-Stock-Algorithm/logo.gif;."
   }
  ],
  "nonPyinstallerOptions": {
