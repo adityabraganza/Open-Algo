@@ -17,7 +17,39 @@ def StockCLoseData(symbol: str, endDate, length: int) -> list:
         ClosePriceValues.append(dataWantedSymbol["Close"][__str__])
     return ClosePriceValues
 
-def findBollingerBandValues(list: list) -> dict:
+def SimpleMovingAverage(list: list) -> dict:
+    x = 0
+    pastClose20days = []
+    while x < 20:
+        pastClose20days.append(list[len(list)-1-x])
+        x += 1
+
+    totalVal = 0
+    for ele in range(0, len(pastClose20days)):
+        totalVal = totalVal + pastClose20days[ele]
+    MovingAverage20 = totalVal/len(pastClose20days)
+
+    currPrice = pastClose20days[0]
+
+    if currPrice  > ((0.05*currPrice)+MovingAverage20):
+        Recomendation = "Strong Buy"
+    elif currPrice  > ((0.03*currPrice)+MovingAverage20):
+        Recomendation = "Weak Buy"
+    elif currPrice < ((0.03*currPrice)-MovingAverage20):
+        Recomendation = "Weak sell"
+    elif currPrice < ((0.03*currPrice)-MovingAverage20):
+        Recomendation = "Strong sell"
+    else:
+        Recomendation = "Neutral"
+
+    valList = [
+        "Recommendation: " + str(Recomendation),
+        "Simple Moving Average: " + str(MovingAverage20),
+        "Current Price: " + str(currPrice)]
+
+    return valList
+
+def FindBollingerBandValues(list: list) -> dict:
 
     x = 0
     bollingerBandStandardDeviationList = []
@@ -56,8 +88,6 @@ def findBollingerBandValues(list: list) -> dict:
     return valList
 
 def RelativeStrengthIndex(list: list) -> dict:
-    #endDate = datetime.today()
-    # = StockCLoseData(symbol, endDate, 30)
 
     x = 0
     pastClose15days = []

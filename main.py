@@ -15,24 +15,35 @@ def analysis():
 
     tk.Label(analysedGUI, text="Analysis for " + symbolInputBox.get().upper()).pack() #Display stock symbol
 
+    ############################################
     tk.Label(analysedGUI, text="").pack() #Blank
+    ############################################
 
-    BBData = findBollingerBandValues(data)
+    SMAData = SimpleMovingAverage(data)
+
+    tk.Label(analysedGUI, text="SMA Analysis:").pack()
+    for i in range(len(SMAData)):
+        tk.Label(analysedGUI, text=SMAData[i]).pack()
+
+    ############################################
+    tk.Label(analysedGUI, text="").pack() #Blank
+    ############################################
+
+    BBData = FindBollingerBandValues(data)
 
     tk.Label(analysedGUI, text="Bollinger Band Analysis:").pack() #Bollinger Band
-    tk.Label(analysedGUI, text=(BBData[0])).pack() #Recomendation
-    tk.Label(analysedGUI, text=(BBData[1])).pack() #Current price
-    tk.Label(analysedGUI, text=(BBData[2])).pack() #Upper band
-    tk.Label(analysedGUI, text=(BBData[3])).pack() #MA
-    tk.Label(analysedGUI, text=(BBData[4])).pack() #Lower band
+    for i in range(len(BBData)):
+        tk.Label(analysedGUI, text=BBData[i]).pack()
 
+    ############################################
     tk.Label(analysedGUI, text="").pack() #Blank
+    ############################################
 
     RSIData = RelativeStrengthIndex(data)
 
     tk.Label(analysedGUI, text="Relative Strength Index Analysis:").pack() #Relative Strength Index
-    tk.Label(analysedGUI, text=(RSIData[0])).pack() #Recomendation
-    tk.Label(analysedGUI, text=(RSIData[1])).pack() #RSI Value
+    for i in range(len(RSIData)):
+        tk.Label(analysedGUI, text=RSIData[i]).pack()
 
     analysedGUI.mainloop()
 
