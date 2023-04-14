@@ -11,11 +11,15 @@
   },
   {
    "optionDest": "onefile",
-   "value": false
+   "value": true
   },
   {
    "optionDest": "console",
    "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/adity/Desktop/Code/Github/NSE-Stock-Algorithm/icon.ico"
   },
   {
    "optionDest": "name",
