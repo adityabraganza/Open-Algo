@@ -5,23 +5,32 @@ import tkinter as tk
 def analysis():
     symbol = (symbolInputBox.get()).upper() + ".NS"
 
+
+    endDate = datetime.today()
+    data = StockCLoseData(symbol, endDate, 60)
+
     analysedGUI = tk.Tk()
 
-    BBData = findBollingerBandValues(symbol)
+    tk.Label(analysedGUI, text="Analysis for " + symbolInputBox.get().upper()).pack() #Display stock symbol
 
-    tk.Label(analysedGUI, text="Bollinger Band Analysis:").grid(column=0, row=0) #Bollinger Band
-    tk.Label(analysedGUI, text=(BBData[0])).grid(column=0, row=1) #Recomendation
-    tk.Label(analysedGUI, text=(BBData[1])).grid(column=0, row=2) #Current price
-    tk.Label(analysedGUI, text=(BBData[2])).grid(column=0, row=3) #Upper band
-    tk.Label(analysedGUI, text=(BBData[3])).grid(column=0, row=4) #MA
-    tk.Label(analysedGUI, text=(BBData[4])).grid(column=0, row=5) #Lower band
+    tk.Label(analysedGUI, text="").pack() #Blank
 
-    tk.Label(analysedGUI, text="").grid(column=0, row=6) #Blank
+    BBData = findBollingerBandValues(data)
 
-    RSIData = RelativeStrengthIndex(symbol)
-    tk.Label(analysedGUI, text="Relative Strength Index Analysis:").grid(column=0, row=7) #Relative Strength Index
-    tk.Label(analysedGUI, text=(RSIData[0])).grid(column=0, row=8) #Recomendation
-    tk.Label(analysedGUI, text=(RSIData[1])).grid(column=0, row=9) #RSI Value
+    tk.Label(analysedGUI, text="Bollinger Band Analysis:").pack() #Bollinger Band
+    tk.Label(analysedGUI, text=(BBData[0])).pack() #Recomendation
+    tk.Label(analysedGUI, text=(BBData[1])).pack() #Current price
+    tk.Label(analysedGUI, text=(BBData[2])).pack() #Upper band
+    tk.Label(analysedGUI, text=(BBData[3])).pack() #MA
+    tk.Label(analysedGUI, text=(BBData[4])).pack() #Lower band
+
+    tk.Label(analysedGUI, text="").pack() #Blank
+
+    RSIData = RelativeStrengthIndex(data)
+
+    tk.Label(analysedGUI, text="Relative Strength Index Analysis:").pack() #Relative Strength Index
+    tk.Label(analysedGUI, text=(RSIData[0])).pack() #Recomendation
+    tk.Label(analysedGUI, text=(RSIData[1])).pack() #RSI Value
 
     analysedGUI.mainloop()
 

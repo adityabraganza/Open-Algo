@@ -17,15 +17,12 @@ def StockCLoseData(symbol: str, endDate, length: int) -> list:
         ClosePriceValues.append(dataWantedSymbol["Close"][__str__])
     return ClosePriceValues
 
-def findBollingerBandValues(symbol: str) -> dict:
-
-    endDate = datetime.today()
-    ClosePriceValues = StockCLoseData(symbol, endDate, 60)
+def findBollingerBandValues(list: list) -> dict:
 
     x = 0
     bollingerBandStandardDeviationList = []
     while x < 20:
-        bollingerBandStandardDeviationList.append(ClosePriceValues[len(ClosePriceValues)-1-x])
+        bollingerBandStandardDeviationList.append(list[len(list)-1-x])
         x += 1
 
     totalValbollinger = 0
@@ -58,13 +55,14 @@ def findBollingerBandValues(symbol: str) -> dict:
         "Lower Band: " + str(LowerBand)]
     return valList
 
-def RelativeStrengthIndex(symbol):
-    endDate = datetime.today()
-    ClosePriceValues = StockCLoseData(symbol, endDate, 30)
+def RelativeStrengthIndex(list: list) -> dict:
+    #endDate = datetime.today()
+    # = StockCLoseData(symbol, endDate, 30)
+
     x = 0
     pastClose15days = []
     while x < 15:
-        pastClose15days.append(ClosePriceValues[len(ClosePriceValues)-1-x])
+        pastClose15days.append(list[len(list)-1-x])
         x += 1
 
     postitivegrowth = []
@@ -89,9 +87,9 @@ def RelativeStrengthIndex(symbol):
         Recomendation = "Strong Sell"
     elif RSI <= 30:
         Recomendation = "Strong Buy"
-    elif RSI > 50:
+    elif RSI > 55:
         Recomendation = "Uptrend"
-    elif RSI < 50:
+    elif RSI < 45:
         Recomendation = "Downtrend"
     else:
         Recomendation = "Neutral"
